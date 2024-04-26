@@ -11,12 +11,11 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 public class PlayActivityView extends AppCompatActivity {
-    private final String DEBUG_TAG = "player_debug";
+    private final String DEBUG_TAG = "debug_logs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_play_view);
 
         Log.d(DEBUG_TAG, "PlayActivityView created");
@@ -35,8 +34,8 @@ public class PlayActivityView extends AppCompatActivity {
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                String videoId = "S0Q4gqBUs7c";
-                youTubePlayer.loadVideo(videoId, 0);
+//                String videoId = "S0Q4gqBUs7c";
+                youTubePlayer.loadVideo(videoId[1], 0);
             }
         });
     }

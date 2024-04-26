@@ -37,8 +37,10 @@ public class HomeActivityView extends AppCompatActivity {
         Button addToPlaylistButton = findViewById(R.id.addToPlaylistButton);
         addToPlaylistButton.setOnClickListener(v -> {
 //            add url to playlist and notify of success
-            DataManager dm = new DataManager(this);
-            boolean successful = dm.insertVideo(url.getText().toString());
+            DataManager data = new DataManager(this);
+            AuthManager auth = new AuthManager(this);
+            int userId = auth.getAuthedUser();
+            boolean successful = data.insertVideo(url.getText().toString(), userId);
             if (successful) {
                 Snackbar.make(addToPlaylistButton, "Video added to playlist", Snackbar.LENGTH_SHORT).show();
             } else {

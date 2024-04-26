@@ -5,11 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Controls user authentication as well as providing an abstraction layer for the auth database
  */
 public class AuthManager extends SQLiteOpenHelper {
+    static private final String DEBUG_TAG = "debug_logs";
     static private final String DATABASE_NAME = "auth.db";
     static private final int DATABASE_VERSION = 1;
     static private final String TABLE_NAME = "users";
@@ -20,7 +22,8 @@ public class AuthManager extends SQLiteOpenHelper {
 //    currently authed user
     static private int authedUserId;
 
-    //    set authenticated user
+    //    get/set authenticated user
+    public int getAuthedUser() { return authedUserId; }
     public void setAuthedUser(int userId) {
         authedUserId = userId;
     }
@@ -47,6 +50,7 @@ public class AuthManager extends SQLiteOpenHelper {
 
 //    add user
     public boolean insertUser(String username, String password) {
+        Log.d(DEBUG_TAG, "Inserting user: " + username);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_USERNAME, username);
@@ -57,6 +61,7 @@ public class AuthManager extends SQLiteOpenHelper {
 
 //    check if user exists
     public boolean userExists(String username, String password) {
+        Log.d(DEBUG_TAG, "Checking if user exists: " + username);
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columns = {COLUMN_ID};
         String selection = COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ?";
@@ -65,6 +70,7 @@ public class AuthManager extends SQLiteOpenHelper {
     }
 
     public int getUserId(String username, String password) {
+        Log.d(DEBUG_TAG, "Getting user ID for: " + username);
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columns = {COLUMN_ID};
         String selection = COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ?";
